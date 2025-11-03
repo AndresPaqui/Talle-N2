@@ -6,6 +6,7 @@ float LeerFloat();
 void calcularInventario(float precio[], int numobjetos);
 void ProductosCaroBarato(float precio[], int cont, char nombres [][20]);
 void encontrarProducto(char nombre[][20], int cont, float precio[]);
+void precioPromedioP(float precios[], int contador);
 
 int main()
 {
@@ -33,24 +34,34 @@ int main()
         printf("------------------------------------------------\n");
         printf(">> ");
         opc = LeerFloat();
-
+        if(opc > 6 || opc < 1) {
+            printf("**Error, elija una opcion valida.**\n");
+        }
         switch (opc)
         {
         case 1:
+
+            if(contador == 10) {
+                printf("Maximo de productos registrados. \n");
+                break;
+            }
+
             printf("\n*Ingrese el nombre de su producto %d: \n", contador + 1);
             printf(">> ");
+
             Leer(nombre[contador]); // Llamamos a la funcion leer
-            printf(" - %s :registrado/a exitosamente!\n", nombre[contador]);
+            printf(" - %s, registrado/a exitosamente!\n", nombre[contador]);
 
             printf("\n*Ingrese el precio del producto: %s\n", nombre[contador]);
             printf(">> ");
+
             do
             {
                 precio[contador] = LeerFloat(); // Llamamos a la funcion leerfloat
 
                 if (precio[contador] <= 0)
                 {
-                    printf("**Error, el precio no puede ser menor a 0. Ingrese un numero valido. **\n");
+                    printf("**Error, el precio no puede ser menor a 0. Ingrese un numero valido. **\n"); //imprimir error si ingresa valores negativos
                     printf(">> ");
                 }
 
@@ -61,8 +72,7 @@ int main()
             contador++;
             break;
         case 2:
-            if (contador == 0)
-            {
+            if (contador == 0){
                 printf("Primero debe ingresar un producto.\n");
                 break;
             }
@@ -70,10 +80,11 @@ int main()
 
             break;
         case 3:
-            ProductosCaroBarato(precio, contador, nombre);
+            ProductosCaroBarato(precio, contador, nombre); //Llamar funcion, calcular barato, caro
             break;
+
         case 4:
-            /* code */
+            precioPromedioP(precio, contador);
             break;
         case 5:
             encontrarProducto(nombre, contador, precio);
@@ -153,6 +164,18 @@ void ProductosCaroBarato(float precio[], int cont, char nombres [][20]){
 
     printf(" - El producto mas caro es (%s) con un valor de ($%.2f) \n", nombres[c], PCaro);
     printf(" - El producto mas barato es (%s) con un valor de ($%.2f) \n", nombres[b], PBarato);
+}
+
+void precioPromedioP(float precios[], int contador) {
+    float precioPromedioP = 0;
+
+    for (int i = 0; i < contador; i++) {
+        precioPromedioP += precios[i];
+    }
+    
+    precioPromedioP = precioPromedioP / contador;
+    printf("El precio promedio de los productos es de: $%.2f\n", precioPromedioP);
+
 }
 
 void encontrarProducto(char nombre[][20], int cont, float precio[]){
