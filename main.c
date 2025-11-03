@@ -3,6 +3,8 @@
 #include "funciones.h"
 void Leer(char cadena[]);
 float LeerFloat();
+void calcularInventario(float precio[], int numobjetos);
+
 int main () {
     //Definir variables
     char nombre [10][20];
@@ -32,15 +34,32 @@ int main () {
         {
         case 1:
         printf("Ingrese el nombre de su producto %d: \n",contador + 1);
-        Leer(nombre[contador]);
-        printf(" %s :registrado/a exitosamente!\n", nombre[contador]);
+        printf(">> ");
+        Leer(nombre[contador]); //Llamamos a la funcion leer
+        printf(" - %s :registrado/a exitosamente!\n", nombre[contador]);
     
         printf("Ingrese el precio del producto: %s\n", nombre[contador]);
         printf(">> ");
-        precio[contador]=LeerFloat();
+        do{
+            precio[contador]=LeerFloat(); //Llamamos a la funcion leerfloat
+
+            if (precio[contador] <= 0){
+                printf("**Error, el precio no puede ser menor a 0. Ingrese un numero valido. **\n");
+                printf(">> ");
+            }
+            
+        } while (precio[contador] <= 0);
+        
+        printf(" - Precio de %s ($%.2f) registrado correctamente!!\n", nombre[contador], precio[contador]);
+
         contador++;
             break;
         case 2:
+            if (contador == 0){
+                printf("Primero debe ingresar un producto.\n");
+                break;
+            }
+            calcularInventario(precio, contador);
             
             break;
         case 3:
@@ -93,4 +112,13 @@ float LeerFloat() {
     }
 
     return valor;
+}
+
+void calcularInventario(float precio[], int numobjetos) {
+    float Tprice = 0;
+    for (int i = 0; i < numobjetos; i++){
+        Tprice = Tprice + precio[i];
+    }
+
+    printf("El precio total de su inventario es: $%.2f\n", Tprice);
 }
