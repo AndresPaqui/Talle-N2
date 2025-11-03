@@ -5,6 +5,7 @@ void Leer(char cadena[]);
 float LeerFloat();
 void calcularInventario(float precio[], int numobjetos);
 void ProductosCaroBarato(float precio[], int cont, char nombres [][20]);
+void encontrarProducto(char nombre[][20], int cont, float precio[]);
 
 int main()
 {
@@ -36,12 +37,12 @@ int main()
         switch (opc)
         {
         case 1:
-            printf("Ingrese el nombre de su producto %d: \n", contador + 1);
+            printf("\n*Ingrese el nombre de su producto %d: \n", contador + 1);
             printf(">> ");
             Leer(nombre[contador]); // Llamamos a la funcion leer
             printf(" - %s :registrado/a exitosamente!\n", nombre[contador]);
 
-            printf("Ingrese el precio del producto: %s\n", nombre[contador]);
+            printf("\n*Ingrese el precio del producto: %s\n", nombre[contador]);
             printf(">> ");
             do
             {
@@ -75,7 +76,7 @@ int main()
             /* code */
             break;
         case 5:
-
+            encontrarProducto(nombre, contador, precio);
             break;
         case 6:
             printf("\nGracias...\n");
@@ -92,8 +93,7 @@ int main()
 void Leer(char cadena[])
 {
     int c;
-    while ((c = getchar()) != '\n' && c != EOF)
-        ;
+    while ((c = getchar()) != '\n' && c != EOF);
     fgets(cadena, 20, stdin);     // Leer materia
     int lan = strlen(cadena) - 1; // Encontrar el "\n"
     cadena[lan] = '\0';           // Reemplazar el "\n" por "\0"
@@ -153,4 +153,32 @@ void ProductosCaroBarato(float precio[], int cont, char nombres [][20]){
 
     printf(" - El producto mas caro es (%s) con un valor de ($%.2f) \n", nombres[c], PCaro);
     printf(" - El producto mas barato es (%s) con un valor de ($%.2f) \n", nombres[b], PBarato);
+}
+
+void encontrarProducto(char nombre[][20], int cont, float precio[]){
+    char buscando[20]; //Guardar nombre a buscar
+    int c = 0;
+    int encontrado = 0;
+
+    printf("\n*Ingrese el nombre del producto a buscar \n");
+    printf(">> ");
+
+    while ((c = getchar()) != '\n' && c != EOF);
+    fgets(buscando, sizeof(buscando), stdin);
+    int lan = strlen(buscando) - 1; // Encontrar el "\n"
+    buscando[lan] = '\0';           // Reemplazar el "\n" por "\0"
+
+    for (int i = 0; i < cont; i++){
+        if(strcmp(nombre[i], buscando) == 0){
+            printf(" - Producto encontrado: %s ($%.2f) \n", nombre[i], precio[i]);
+            encontrado = 1;
+            break;
+        }
+    }
+    if(!encontrado){
+        printf(" - Producto no encontrado. \n");
+    }
+    
+    
+
 }
