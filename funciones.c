@@ -17,11 +17,25 @@ void menu()
 void Leer(char cadena[])
 {
     int c;
-    while ((c = getchar()) != '\n' && c != EOF)
-        ;
-    fgets(cadena, 20, stdin);     // Leer materia
+    while ((c = getchar()) != '\n' && c != EOF);
+    fgets(cadena, 20, stdin);     // Leer 
     int lan = strlen(cadena) - 1; // Encontrar el "\n"
     cadena[lan] = '\0';           // Reemplazar el "\n" por "\0"
+    
+    
+}
+void NoRepeat(char nombre[][20], int cont){
+    int c;
+    
+    for (int k = 0; k < cont; k++)
+    {
+        while(strcmp(nombre[cont], nombre[k])==0){
+            printf("Ya hay un producto con el mismo nombre, intentalo nuevamente.\n>> ");
+            fgets(nombre[cont], 20, stdin);     //Leer
+            int lan = strlen(nombre[cont]) - 1; // Encontrar el "\n"
+            nombre[cont][lan] = '\0';           // Reemplazar el "\n" por "\0"
+        }
+    }
 }
 float LeerFloat()
 {
@@ -102,16 +116,14 @@ void encontrarProducto(char nombre[][20], int cont, float precio[])
     char buscando[20]; // Guardar nombre a buscar
     int c = 0;
     int encontrado = 0;
-
+    
     printf("\n*Ingrese el nombre del producto a buscar \n");
     printf(">> ");
-
-    while ((c = getchar()) != '\n' && c != EOF)
-        ;
+    
+    while ((c = getchar()) != '\n' && c != EOF);
     fgets(buscando, sizeof(buscando), stdin);
     int lan = strlen(buscando) - 1; // Encontrar el "\n"
     buscando[lan] = '\0';           // Reemplazar el "\n" por "\0"
-
     for (int i = 0; i < cont; i++)
     {
         if (strcmp(nombre[i], buscando) == 0)

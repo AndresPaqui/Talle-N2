@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "funciones.c"
+#include "funciones.h"
 
 int main()
 {
@@ -36,6 +36,7 @@ int main()
 
             printf("\n*Ingrese el nombre de su producto %d: \n>> ", contador + 1);
             Leer(nombre[contador]); // Llamamos a la funcion leer
+            NoRepeat(nombre, contador);
 
             printf(" - %s, registrado/a exitosamente!\n", nombre[contador]);
             printf("\n*Ingrese el precio del producto: %s\n", nombre[contador]);
@@ -63,13 +64,25 @@ int main()
 
             break;
         case 3:
+            if (contador == 0){
+                printf("Primero debe ingresar un producto.\n");
+                break;
+            }
             ProductosCaroBarato(precio, contador, nombre); //Llamar funcion, calcular barato, caro
             break;
 
         case 4:
+            if (contador == 0){
+                printf("Primero debe ingresar un producto.\n");
+                break;
+            }
             precioPromedioP(precio, contador);
             break;
         case 5:
+            if (contador == 0){
+                printf("Primero debe ingresar un producto.\n");
+                break;
+            }
             encontrarProducto(nombre, contador, precio);
             break;
         case 6:
@@ -79,7 +92,6 @@ int main()
         default:
             break;
         }
-
     } while (opc != 6);
 
     return 0;
